@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-family: 'Mukta', sans-serif;
+  background-image: linear-gradient(
+      41deg,
+      rgba(107, 107, 107, 0.04) 0%,
+      rgba(107, 107, 107, 0.04) 8%,
+      rgba(31, 31, 31, 0.04) 8%,
+      rgba(31, 31, 31, 0.04) 100%
+    ),
+    linear-gradient(
+      9deg,
+      rgba(228, 228, 228, 0.04) 0%,
+      rgba(228, 228, 228, 0.04) 62%,
+      rgba(54, 54, 54, 0.04) 62%,
+      rgba(54, 54, 54, 0.04) 100%
+    ),
+    linear-gradient(
+      124deg,
+      rgba(18, 18, 18, 0.04) 0%,
+      rgba(18, 18, 18, 0.04) 37%,
+      rgba(233, 233, 233, 0.04) 37%,
+      rgba(233, 233, 233, 0.04) 100%
+    ),
+    linear-gradient(
+      253deg,
+      rgba(201, 201, 201, 0.04) 0%,
+      rgba(201, 201, 201, 0.04) 55%,
+      rgba(47, 47, 47, 0.04) 55%,
+      rgba(47, 47, 47, 0.04) 100%
+    ),
+    linear-gradient(
+      270deg,
+      rgba(172, 172, 172, 0.04) 0%,
+      rgba(172, 172, 172, 0.04) 33%,
+      rgba(26, 26, 26, 0.04) 33%,
+      rgba(26, 26, 26, 0.04) 100%
+    ),
+    linear-gradient(
+      64deg,
+      rgba(11, 11, 11, 0.04) 0%,
+      rgba(11, 11, 11, 0.04) 38%,
+      rgba(87, 87, 87, 0.04) 38%,
+      rgba(87, 87, 87, 0.04) 100%
+    ),
+    linear-gradient(
+      347deg,
+      rgba(199, 199, 199, 0.04) 0%,
+      rgba(199, 199, 199, 0.04) 69%,
+      rgba(4, 4, 4, 0.04) 69%,
+      rgba(4, 4, 4, 0.04) 100%
+    ),
+    linear-gradient(
+      313deg,
+      rgba(36, 36, 36, 0.04) 0%,
+      rgba(36, 36, 36, 0.04) 20%,
+      rgba(91, 91, 91, 0.04) 20%,
+      rgba(91, 91, 91, 0.04) 100%
+    ),
+    linear-gradient(90deg, rgb(10, 17, 72), rgb(35, 148, 228));
+}
+.cards_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 30px;
+}
+
+.img_elem {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  cursor: help;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1.5px solid lightblue;
+  border-radius: 5px;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: rgba(240, 255, 255, 0.884);
+  box-shadow: 0 22px 10px -20px rgba(0, 0, 0, 0.45) inset,
+    0 -22px 10px -20px rgba(0, 0, 0, 0.45) inset;
+}
+
+.text {
+  font-size: 19px;
+  font-weight: 600;
+  color: rgb(95, 95, 97);
+}
+
+.rating_container {
+  font-size: 20px;
+}
+.fa {
+  margin-left: 5px;
+}
+
+.active {
+  color: rgb(249, 149, 82);
+}
