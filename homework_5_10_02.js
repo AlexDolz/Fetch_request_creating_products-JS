@@ -1,77 +1,135 @@
-// ************************* Task 1 **********************************
-// Задана ссылка на api:
-// let url = "https://dummyjson.com/products"
-// Напишите fetch-запрос, который получит данные от сервера в виде массива и для каждого полученного элемента формирует div элемент с описанием товара.
-
-// В div необходимо указать следующую информацию:
-// Изображение товара
-// Имя продукта
-// Стоимость продукта
-// Рейтинг продукта (*)
-
-// Требования к работе:
-// 1) В работе должна присутствовать небольшая стилизация (grid/flex сетка). Все элементы можно расположить по правилам grid сетки (по 3 элемента)
-// 2) Скрипт должен быть разделен на назначенные функции (fetch, render, rating (*) )
-// 3) (*) У каждого товара назначен рейтинг (дробное число). Необходимо написать функцию rating(n), которая получает рейтинг и выводит в разметке 5 иконок звезды. В зависимости от n аргумента на разметке должно появиться n активных звезд из 5.
-// Внутри функции аргумент необходимо округлить до целого числа по правилам математики
-
-let url = 'https://dummyjson.com/products';
+const selectItem = document.querySelector('.select_item');
 
 // Fetch function
+let url = 'https://dummyjson.com/products';
 function getProducts(url) {
   fetch(url)
     .then(res => res.json())
-    .then(json => renderProducts(json.products));
+    .then(data => renderProducts(data.products));
 }
-
-getProducts(url);
 
 // Render function
 const cardsContainer = document.createElement('div');
 
 function renderProducts(products) {
-  const allProducts = products.map(
-    ({ thumbnail, title, price, description, rating }) => {
-      const card = document.createElement('div');
-      const imgElem = document.createElement('img');
-      const titleElem = document.createElement('p');
-      const priceElem = document.createElement('p');
-      const ratingContainer = document.createElement('div');
+  cardsContainer.innerHTML = '';
+  for (let elem of products) {
+    const card = document.createElement('div');
+    const imgElem = document.createElement('img');
+    const titleElem = document.createElement('p');
+    const priceElem = document.createElement('p');
 
-      imgElem.src = thumbnail;
-      imgElem.alt = 'img';
-      imgElem.title = description;
+    imgElem.src = elem.images[0];
+    imgElem.alt = 'img';
 
-      cardsContainer.classList.add('cards_container');
-      card.classList.add('card');
-      imgElem.classList.add('img_elem');
-      titleElem.classList.add('text');
-      priceElem.classList.add('text');
+    cardsContainer.classList.add('cards_container');
+    card.classList.add('card');
+    imgElem.classList.add('img_elem');
+    titleElem.classList.add('text');
+    priceElem.classList.add('text');
 
-      titleElem.innerText = `Title: ${title}`;
-      priceElem.innerText = `Price: ${price}$`;
+    titleElem.innerText = `Title: ${elem.title}`;
+    priceElem.innerText = `Price: ${elem.price}$`;
 
-      ratingContainer.classList.add('rating_container');
-      ratingContainer.innerHTML = getRatings(rating);
+    card.append(imgElem, titleElem, priceElem, getRatings(elem.rating));
 
-      card.append(imgElem, titleElem, priceElem, ratingContainer);
-      return card;
-    }
-  );
+    card.addEventListener('click', () => {
+      modal(elem);
+      cardsContainer.style.filter = 'blur(8px)';
+    });
+    cardsContainer.append(card);
+  }
 
-  cardsContainer.append(...allProducts);
+  selectItem.onchange = event => {
+    renderProducts(sortElems(products, event.target.value));
+  };
+}
+
+// sort function
+function sortElems(data, type) {
+  if (type === '1') {
+    data.sort((crElem, nxElem) => crElem.price - nxElem.price);
+  } else if (type === '2') {
+    data.sort((crElem, nxElem) => nxElem.price - crElem.price);
+  } else if (type === '0') {
+    data.sort((crElem, nxElem) => crElem.id - nxElem.id);
+  }
+  return data;
 }
 
 document.body.append(cardsContainer);
 
+// modal function
+function modal(elem) {
+  // Modal area
+  const divModalArea = document.createElement('div');
+  divModalArea.className = 'modal_area';
+
+  // Modal container
+  const divModalContainer = document.createElement('div');
+  divModalContainer.classList.add('modal_container');
+
+  // Close-cross
+  const cross = document.createElement('i');
+  cross.className = 'las la-times';
+
+  cross.addEventListener('click', () => {
+    divModalArea.remove();
+    cardsContainer.style.filter = 'blur(0px)';
+  });
+
+  // window.addEventListener('click', () => divModalArea.remove());
+
+  // Making div element with content
+  const divItemModal = document.createElement('div');
+  divItemModal.className = 'item_modal';
+
+  const imgItemModal = document.createElement('img');
+  imgItemModal.src = elem.images[0];
+  imgItemModal.height = 380;
+  imgItemModal.width = 700;
+  imgItemModal.style.objectFit = 'contain';
+
+  const pItemDescription = document.createElement('p');
+  pItemDescription.innerText = elem.description;
+
+  // Making img
+  const divImages = document.createElement('div');
+  divImages.className = 'images_container';
+
+  for (let img of elem.images) {
+    let imgELem = document.createElement('img');
+    imgELem.className = 'item_image_modal';
+    imgELem.src = img;
+    divImages.append(imgELem);
+
+    imgELem.addEventListener('click', () => (imgItemModal.src = img));
+  }
+
+  divItemModal.append(imgItemModal, getRatings(elem.rating), pItemDescription);
+
+  divModalContainer.append(cross, divImages, divItemModal);
+  divModalArea.append(divModalContainer);
+  document.body.append(divModalArea);
+}
+
 // Ratings function
 function getRatings(rating) {
   const roundedAmount = Math.round(rating);
-  const ratingMax = 5;
-  let stars = '';
-  let starInactive = '<span class="fa fa-star"></span>';
-  let starActive = '<span class="fa fa-star active"></span>';
-  for (let i = 0; i < ratingMax; i++)
-    i >= roundedAmount ? (stars += starInactive) : (stars += starActive);
-  return stars;
+  const ratingContainer = document.createElement('div');
+  ratingContainer.classList.add('rating_container');
+
+  for (let i = 0; i < 5; i++) {
+    const spanElem = document.createElement('span');
+    if (roundedAmount > i) {
+      spanElem.className = 'fa fa-star active';
+    } else {
+      spanElem.className = 'fa fa-star';
+    }
+    ratingContainer.append(spanElem);
+  }
+
+  return ratingContainer;
 }
+
+getProducts(url);

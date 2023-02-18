@@ -3,8 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
-html {
-  font-family: 'Mukta', sans-serif;
+body {
+  height: 100vh;
   background-image: linear-gradient(
       41deg,
       rgba(107, 107, 107, 0.04) 0%,
@@ -63,6 +63,19 @@ html {
     ),
     linear-gradient(90deg, rgb(10, 17, 72), rgb(35, 148, 228));
 }
+html {
+  font-family: 'Mukta', sans-serif;
+}
+.sort_div {
+  margin: 10px 0 55px 30px;
+}
+.sort {
+  color: white;
+  font-size: 20px;
+}
+.select_item {
+  font-size: 15px;
+}
 .cards_container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -74,10 +87,10 @@ html {
   width: 150px;
   height: 150px;
   object-fit: contain;
-  cursor: help;
 }
 
 .card {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,11 +112,66 @@ html {
 
 .rating_container {
   font-size: 20px;
-}
-.fa {
-  margin-left: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .active {
   color: rgb(249, 149, 82);
+}
+
+.modal_container {
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  left: calc(50% - 500px);
+  top: 150px;
+  width: 1000px;
+  height: 500px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.las {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.modal_area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.images_container {
+  width: 225px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.item_image_modal {
+  padding: 10px;
+  border-radius: 20px;
+  margin: 10px;
+  width: 165px;
+  object-fit: contain;
+}
+
+.item_modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  gap: 15px;
 }
