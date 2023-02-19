@@ -78,7 +78,12 @@ function modal(elem) {
     cardsContainer.style.filter = 'blur(0px)';
   });
 
-  // window.addEventListener('click', () => divModalArea.remove());
+  document.body.addEventListener('keydown', event => {
+    if (event.key == 'Escape') {
+      divModalArea.remove();
+      cardsContainer.style.filter = 'blur(0px)';
+    }
+  });
 
   // Making div element with content
   const divItemModal = document.createElement('div');
@@ -86,7 +91,7 @@ function modal(elem) {
 
   const imgItemModal = document.createElement('img');
   imgItemModal.src = elem.images[0];
-  imgItemModal.height = 380;
+  imgItemModal.height = 350;
   imgItemModal.width = 700;
   imgItemModal.style.objectFit = 'contain';
 
@@ -111,6 +116,21 @@ function modal(elem) {
   divModalContainer.append(cross, divImages, divItemModal);
   divModalArea.append(divModalContainer);
   document.body.append(divModalArea);
+
+  function removeModal(evt) {
+    let target = evt.target;
+    while (target.parentNode) {
+      if (target.classList.contains('modal_container')) {
+        return;
+      }
+      target = target.parentNode;
+    }
+    document.body.removeChild(divModalArea);
+    window.removeEventListener('click', removeModal, true);
+    cardsContainer.style.filter = 'blur(0px)';
+  }
+
+  window.addEventListener('click', removeModal, true);
 }
 
 // Ratings function
