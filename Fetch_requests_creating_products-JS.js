@@ -18,12 +18,21 @@ function renderProducts(products) {
     const imgElem = document.createElement('img');
     const titleElem = document.createElement('p');
     const priceElem = document.createElement('p');
+    const xMark = document.createElement('i');
+    xMark.className = 'las la-times';
+
+    xMark.addEventListener('click', event => {
+      event.stopPropagation();
+      products = products.filter(value => value.id != elem.id);
+      renderProducts(products);
+    });
 
     imgElem.src = elem.images[0];
     imgElem.alt = 'img';
 
     cardsContainer.classList.add('cards_container');
     card.classList.add('card');
+
     imgElem.classList.add('img_elem');
     titleElem.classList.add('text');
     priceElem.classList.add('text');
@@ -31,7 +40,7 @@ function renderProducts(products) {
     titleElem.innerText = `Title: ${elem.title}`;
     priceElem.innerText = `Price: ${elem.price}$`;
 
-    card.append(imgElem, titleElem, priceElem, getRatings(elem.rating));
+    card.append(imgElem, titleElem, priceElem, getRatings(elem.rating), xMark);
 
     card.addEventListener('click', () => {
       modal(elem);

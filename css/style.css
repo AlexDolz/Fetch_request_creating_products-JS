@@ -90,6 +90,7 @@ html {
 }
 
 .card {
+  position: relative;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -137,7 +138,7 @@ html {
   position: absolute;
   right: 10px;
   top: 10px;
-  font-size: 35px;
+  font-size: 30px;
   cursor: pointer;
 }
 
