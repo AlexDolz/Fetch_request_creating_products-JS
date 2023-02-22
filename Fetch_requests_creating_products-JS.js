@@ -1,11 +1,22 @@
 const selectItem = document.querySelector('.select_item');
 
+function preRender() {
+  const storageData = JSON.parse(localStorage.getItem('products'));
+  if (storageData) {
+    renderProducts(storageData);
+  } else {
+    getProducts();
+  }
+}
+
 // Fetch function
-let url = 'https://dummyjson.com/products';
-function getProducts(url) {
-  fetch(url)
+function getProducts() {
+  fetch('https://dummyjson.com/products')
     .then(res => res.json())
-    .then(data => renderProducts(data.products));
+    .then(data => {
+      localStorage.setItem('products', JSON.stringify(data.products));
+      renderProducts(data.products);
+    });
 }
 
 // Render function
@@ -24,6 +35,7 @@ function renderProducts(products) {
     xMark.addEventListener('click', event => {
       event.stopPropagation();
       products = products.filter(value => value.id != elem.id);
+      localStorage.setItem('products', JSON.stringify(products));
       renderProducts(products);
     });
 
@@ -63,6 +75,7 @@ function sortElems(data, type) {
   } else if (type === '0') {
     data.sort((crElem, nxElem) => crElem.id - nxElem.id);
   }
+  localStorage.setItem('products', JSON.stringify(data));
   return data;
 }
 
@@ -161,4 +174,4 @@ function getRatings(rating) {
   return ratingContainer;
 }
 
-getProducts(url);
+preRender();
