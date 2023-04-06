@@ -81,6 +81,7 @@ html {
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
   margin: 30px;
+  padding-bottom: 55px;
 }
 
 .img_elem {
@@ -175,4 +176,15 @@ html {
   align-items: center;
   padding: 40px;
   gap: 15px;
+}
+
+@media (max-width: 700px) {
+  .cards_container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .cards_container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
